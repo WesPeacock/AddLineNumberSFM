@@ -40,14 +40,16 @@ for ($flgmarks) {
 	}
 my $srchflgmarks = qr/$flgmarks/;
 my $ix;
+my $eol;
 
 LINE:
 while (<>) {
 	$ix = sprintf('%06d', $.);
 	if (/^\\$srchflgmarks /) {
-		s/\R//;
+		s/(\R)//;
+		$eol = $1;
 		s/\:[0-9]{6}$//; # remove existing line number
-		s/$/:$ix\n/
+		s/$/:$ix$eol/
 		}
 	}
 continue {
